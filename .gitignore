@@ -1,0 +1,6 @@
+.*
+*~
+!.gitignore
+
+# ignore PEAR packages
+sfHtml5FormPlugin-*.tgz

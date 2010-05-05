@@ -1,0 +1,129 @@
+# sfHtml5Form plugin #
+
+The `sfHtml5FormPlugin` provides you with widgets and validators to use
+the new HTML5 input types for forms and filters.
+
+It also has a demonstration module for you to evaluate quickly how your 
+browser supports the new fields.
+
+## Where to use / Where not to use ##
+
+HTML5 is cutting-edge technology, so only modern browsers support it.
+But browsers not knowing the new input-types will fall back to rendering an
+input-text - though you should be aware that they miss the comfort of the new input-types,
+such as a calendar. So, your forms will be accessible anyways. And if you utilize 
+`sfValidatorOr` you will be able to allow machine- (e.g `2007-02-19T12:34:56Z`)
+and human-submitted (e.g. `19.2.2007 12:34:56`) values likewise.
+
+Scenarios, I see these widgets in good use:
+
+  *    use in backend
+
+  *    use in an intranet if you have controll on the browsers the users use
+
+  *    private pages
+  
+Scenarios, I see these widgets in not so good use:
+
+  *    commercial pages (at least for now)
+
+
+
+## Installation ##
+
+  * Install the plugin (via a package)
+
+        symfony plugin:install sfHtml5FormPlugin
+        
+  * Activate the plugin in the `config/ProjectConfiguration.class.php`
+  
+        [php]
+        class ProjectConfiguration extends sfProjectConfiguration
+        {
+          public function setup()
+          {
+            // ...
+            $this->enablePlugins(array("sfHtml5FormPlugin"));
+            // ...
+          }
+        }
+
+  * Optional: Enable the demo module in the `backend/config/settings.yml`
+ 
+        [yml]
+        # we'll just enable the module for the dev environment
+        dev:
+          .settings:
+            # ...
+            enabled_modules: [sfHtml5FormDemo]
+            # ...
+      
+    And create a route to the module in the `backend/config/routing.yml`
+    
+        [yml]
+        html5form_demo:
+          url: /demo
+          param: { module: sfHtml5FormDemo, action: index }
+
+    The module is available at `[BASEURL]/backend_dev.php/demo` now.
+    
+## Documentation ##
+
+  All classes are documented inline.
+
+## Classes ##
+
+The plugin adds the following Validators:
+
+  *  sfValidator5Color
+  *  sfValidator5Date
+  *  sfValidator5DateTimeLocal
+  *  sfValidator5DateTime
+  *  sfValidator5Email
+  *  sfValidator5Month
+  *  sfValidator5Time
+  
+The plugin adds the following Widgets:  
+
+  *  sfWidgetFormInputColor
+  *  sfWidgetFormInputDate
+  *  sfWidgetFormInputDateTimeLocal
+  *  sfWidgetFormInputDateTime
+  *  sfWidgetFormInputEmail
+  *  sfWidgetFormInputMonth
+  *  sfWidgetFormInputNumber
+  *  sfWidgetFormInputRange
+  *  sfWidgetFormInputSearch
+  *  sfWidgetFormInputTel
+  *  sfWidgetFormInputTime
+  *  sfWidgetFormInputUrl
+  *  sfWidgetFormInputWeek
+  *  sfWidgetFormKeygen
+
+## using `sfWidgetFormInputDateTime` for Filters ##
+
+    [php]
+    class YourFormFilter extends BaseYourFormFilter
+    {
+      public function configure()
+      {
+      	$this->widgetSchema['created_at']->setOption(
+      	  'from_date', new sfWidgetFormInputDateTime()
+      	);
+      	$this->widgetSchema['created_at']->setOption(
+      	  'to_date', new sfWidgetFormInputDateTime()
+      	);
+      }
+    }
+
+
+## Known issues ##
+
+  *  Missing a validator for `sfWidgetFormInputWeek`
+  
+  *  Missing a validator for `sfWidgetFormKeygen`
+
+  
+## Contribution & Bugs ##
+
+If you'd like to contribute or found any bugs, you are welcome to report them.
