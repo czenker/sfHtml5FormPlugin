@@ -5,6 +5,8 @@ class sfHtml5FormDemoForm extends sfForm {
 	public function configure() {
 		
 		$now = time();
+		$choices = array('Mr.', 'Mrs.', 'Dr.', 'Prof.');
+		
 		
 		$this->setWidgets(array(
 			'input_color' => new sfWidgetFormInputColor(),
@@ -76,7 +78,15 @@ class sfHtml5FormDemoForm extends sfForm {
 				'step' => 3600
 			)),
 			'input_url' => new sfWidgetFormInputUrl(),
-			'keygen' => new sfWidgetFormKeygen(),
+//			'keygen' => new sfWidgetFormKeygen(),
+
+			'input_datalist' => new sfWidgetFormInputDatalist(array(
+				'choices' => $choices
+			)),
+			
+			'input_datalist_autocomplete' => new sfWidgetFormInputDatalist(array(
+				'choices_url' => ''
+			)),
 		));
 		
 		$this->widgetSchema->setHelps(array(
@@ -109,34 +119,45 @@ class sfHtml5FormDemoForm extends sfForm {
 			'input_time_limit' => 'time between 9am and 6pm',
 			'input_time_step' => 'full hours',
 			'input_url' => '',
-			'keygen' => '',
+			'input_datalist' => '',
+			'input_datalist_autocomplete' => 'auto-completion through AJAX',
+//			'keygen' => '',
+			
 		));
 		
 		$this->setValidators(array(
 			'input_color' => new sfValidator5Color(),
-			'input_date' => new sfValidator5Date(array(
-				'min' => $now-3600
-			)),
-			'input_date_time' => new sfValidator5DateTime(array(
-				'required' => false,
-				'max' => $now
-			)),
+			'input_date' => new sfValidator5Date(),
+			'input_date_limits' => new sfValidator5Date(),
+			'input_date_step' => new sfValidator5Date(),
+			'input_date_time' => new sfValidator5DateTime(),
+			'input_date_time_limits' => new sfValidator5DateTime(),
+			'input_date_time_step' => new sfValidator5DateTime(),
 			'input_date_time_local' => new sfValidator5DateTimeLocal(),
-			'input_email' => new sfValidator5Email(array(
-				'multiple' => true
-			)),
+			'input_date_time_local_limits' => new sfValidator5DateTimeLocal(),
+			'input_date_time_local_step' => new sfValidator5DateTimeLocal(),
+			'input_email' => new sfValidator5Email(),
+			'input_email_multiple' => new sfValidator5Email(),
 			'input_month' => new sfValidator5Month(),
-			'input_week' => new sfValidatorPass(), //TODO: we need a validator
+			'input_month_limit' => new sfValidator5Month(),
+			'input_month_step' => new sfValidator5Month(),
+			'input_week' => new sfValidatorPass(),
+			'input_week_limit' => new sfValidatorPass(),
+			'input_week_step' => new sfValidatorPass(),
 			'input_number' => new sfValidatorNumber(),
-			'input_range' => new sfValidatorNumber(array(
-				'min' => 0,
-				'max' => 100
-			)),
+			'input_number_limit' => new sfValidatorNumber(),
+			'input_number_step' => new sfValidatorNumber(),
+			'input_range' => new sfValidatorNumber(),
+			'input_range_limit' => new sfValidatorNumber(),
 			'input_search' => new sfValidatorString(),
 			'input_tel' => new sfValidatorString(),
 			'input_time' => new sfValidator5Time(),
+			'input_time_limit' => new sfValidator5Time(),
+			'input_time_step' => new sfValidator5Time(),
 			'input_url' => new sfValidatorUrl(),
-			'keygen' => new sfValidatorPass(), //TODO: we need a validator
+			'input_datalist' => new sfValidatorString(),
+			'input_datalist_autocomplete' => new sfValidatorString(),
+//			'keygen' => new sfValidatorPass(), //TODO: we need a validator
 		));
 		
 		foreach($this->validatorSchema->getFields() as $validator) {
@@ -144,33 +165,6 @@ class sfHtml5FormDemoForm extends sfForm {
 		}
 		
 		$this->widgetSchema->setNameFormat('sf_html5_form_demo[%s]');
-		$this->widgetSchema->setFormFormatterName('table');
-		
-	}
-}
-
-
-class sfHtml5FormDemoMockForm extends sfForm {
-	
-	public function configure() {
-		
-		$this->setWidgets(array(
-			'input_color' => new sfWidgetFormInputText(),
-			'input_date' => new sfWidgetFormInputText(),
-			'input_date_time' => new sfWidgetFormInputText(),
-			'input_date_time_local' => new sfWidgetFormInputText(),
-			'input_email' => new sfWidgetFormInputText(),
-			'input_month' => new sfWidgetFormInputText(),
-			'input_week' => new sfWidgetFormInputText(),
-			'input_number' => new sfWidgetFormInputText(),
-			'input_range' => new sfWidgetFormInputText(),
-			'input_search' => new sfWidgetFormInputText(),
-			'input_tel' => new sfWidgetFormInputText(),
-			'input_time' => new sfWidgetFormInputText(),
-			'input_url' => new sfWidgetFormInputText(),
-		));
-		
-		$this->widgetSchema->setNameFormat('sf_html5_form_demo_mock[%s]');
 		$this->widgetSchema->setFormFormatterName('table');
 		
 	}

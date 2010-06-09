@@ -6,7 +6,9 @@
 <p class="msg_error"><?php echo $sf_user->getFlash('error') ?></p>
 <?php endif;?>
 
-<?php if(isset($params)) { var_dump($params); } ?>
+<?php if($form->isBound()):?>
+	<?php include_partial('inspect_values' , array('form' => $form));?>
+<?php endif;?>
 <form action="" method="post">
 <table>
 	<tfoot>
@@ -16,19 +18,6 @@
 	</tfoot>
 	<tbody>
 		<?php echo $form->render();?>
-	</tbody>
-</table>
-</form>
-
-<form action="" method="post">
-<table>
-	<tfoot>
-		<tr>
-			<td colspan="2"><input type="submit" value="Try it!" /></td>
-		</tr>
-	</tfoot>
-	<tbody>
-		<?php echo $formMock->render();?>
 	</tbody>
 </table>
 </form>
